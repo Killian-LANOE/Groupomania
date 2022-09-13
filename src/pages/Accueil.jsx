@@ -23,17 +23,21 @@ const StyledNav = styled.nav`
 `;
 
 function Accueil() {
-    const [form, setForm] = useState('Login');
-    const changeForm = () => {
-        setForm(form === 'Login' ? 'Signup' : 'Login');
+    const [title, setTitle] = useState('Login');
+    const setSignup = (e) => {
+        e.preventDefault();
+        setTitle('Signup');
     };
-    const title = form;
+    const setLogin = (e) => {
+        e.preventDefault();
+        setTitle('Login');
+    };
 
     return (
         <div>
             <StyledNav>
-                <StyledButton onClick={changeForm}>Login</StyledButton>
-                <StyledButton onClick={changeForm}>signup</StyledButton>
+                <StyledButton onClick={setLogin}>Login</StyledButton>
+                <StyledButton onClick={setSignup}>Signup</StyledButton>
             </StyledNav>
             <h1>{title}</h1>
             <StyledLabel>
