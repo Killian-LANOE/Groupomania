@@ -3,9 +3,7 @@ const fs = require('fs');
 
 exports.getPosts = (req, res, next) => {
     Post.find()
-        .then((posts) =>
-            res.status(200).json({message: 'test', text: 'other test'})
-        )
+        .then((posts) => res.status(200).json({posts}))
         .catch((error) => res.status(400).json({error}));
 };
 
@@ -16,14 +14,11 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
-    delete postObject._id;
-    delete postObject._userId;
     const post = new Post({
-        ...postObject,
         userId: req.auth.userId,
+        description: req.body.description,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${
-            req.file.filename
+            req.file?.filename
         }`,
         likes: 0,
         dislikes: 0,

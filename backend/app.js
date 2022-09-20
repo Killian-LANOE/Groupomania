@@ -8,17 +8,10 @@ const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 
 mongoose
-    .connect(
-        'mongodb+srv://' +
-            process.env.MDB_User +
-            ':' +
-            process.env.MDB_Pass +
-            '@cluster0.xrnytdj.mongodb.net/?retryWrites=true&w=majority',
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        }
-    )
+    .connect(process.env.BDD_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 

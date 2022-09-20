@@ -43,6 +43,10 @@ function HandleSignup(e) {
             email: e.target['email'].value,
             password: e.target['password'].value,
         }),
+    }).then((res) => {
+        if (res.ok) {
+            alert('Utilisateur Crée');
+        }
     });
 }
 

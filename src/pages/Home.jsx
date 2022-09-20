@@ -21,12 +21,20 @@ const StyledButton = styled.button`
     background-color: transparent;
     color: ${colors.white};
     padding: 10px;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const StyledNav = styled.nav`
     display: flex;
     justify-content: center;
 `;
+function logout(e) {
+    e.preventDefault();
+    localStorage.clear('token');
+    window.location = '/';
+}
 
 function Home() {
     return (
@@ -35,6 +43,7 @@ function Home() {
                 <StyledNav>
                     <StyledButton>Accueil</StyledButton>
                     <StyledButton>Settings</StyledButton>
+                    <StyledButton onClick={logout}>Logout</StyledButton>
                 </StyledNav>
                 <h1>Home</h1>
                 <SizedImg src={Profile} alt=""></SizedImg>

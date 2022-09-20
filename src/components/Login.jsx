@@ -35,8 +35,11 @@ function HandleLogin(e) {
             password: e.target['password'].value,
         }),
     })
-        .then((res) => {
+        .then(async (res) => {
             if (res.ok) {
+                const response = await res.json();
+                console.log(response.token);
+                localStorage.setItem('token', response.token);
                 window.location = '/home';
             } else {
                 alert('Login/Password incorrect !');
@@ -60,6 +63,7 @@ function Login() {
                 <StyledLabel>
                     mot de passe:
                     <input
+                        type="password"
                         name="password"
                         placeholder="password"
                         required
