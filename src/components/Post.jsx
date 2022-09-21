@@ -8,22 +8,36 @@ const StyledLabel = styled.label`
     align-items: center;
 `;
 
-const StyledInput = styled.input`
+const DescriptionInput = styled.input`
     padding: 15px;
+    width: 200px;
+    margin-bottom: 15px;
 `;
-
-const DisplayImage = styled.div`
-    width: 375px;
-    height: 211px;
-    border: 1px solid white;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+const FileInput = styled.input`
+    width: 230px;
+    margin-bottom: 15px;
 `;
 
 const StyledImg = styled.img`
-    width: 300px;
-    heigth: auto;
+    width: 150px;
+    heigth: 150px;
+    margin-bottom: 10px;
+`;
+
+const PostContentButton = styled.button`
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+`;
+
+const ButtonPostUtils = styled.button`
+    padding: 5px;
+    margin: 5px;
+`;
+
+const PostContainer = styled.div`
+    text-align: center;
+    border: solid 2px white;
 `;
 
 //
@@ -31,89 +45,102 @@ const StyledImg = styled.img`
 const token = localStorage.getItem('token');
 
 // Create a Post from the description & image provided
-async function CreatePost(e) {
-    e.preventDefault();
 
-    const image = e.target['image'].files[0];
-    const description = e.target['description'].value;
-
-    const data = new FormData();
-    data.append('imageUrl', image);
-    data.append('description', description);
-
-    fetch('http://localhost:8000/api/posts', {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        body: data,
-    })
-        .then((res) => {
-            if (res.ok) {
-                alert('Post Crée');
-            }
-        })
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err));
-}
 //
 
-//Get Posts from fetch api if user have a token
 function Posts() {
-    const [post, setPost] = useState();
+    const [posts, setPosts] = useState();
+
+    //Create a post
+    async function CreatePost(e) {
+        e.preventDefault();
+        const image = e.target['image'].files[0];
+        const description = e.target['description'].value;
+
+        const data = new FormData();
+        data.append('imageUrl', image);
+        data.append('description', description);
+
+        fetch('http://localhost:8000/api/posts', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: data,
+        })
+            .then((res) => {
+                if (res.ok) {
+                    alert('Post Crée');
+                }
+            })
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+    }
+
+    //Get Posts from fetch api if user have a token
     async function getInfo() {
-        const res = await fetch('http://localhost:8000/api/posts/', {
+        const res = await fetch('http://localhost:8000/api/posts', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
         const data = await res.json();
-        console.log(data);
-        setPost(data);
+        setPosts(data.posts);
     }
-    //
 
-    // Display Image in a div after choosing it
-    let uploaded_image = '';
-    function handleImage(event) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-            uploaded_image = reader.result;
-            document.querySelector(
-                '#display_image'
-            ).style.backgroundImage = `url(${uploaded_image})`;
-        });
-        reader.readAsDataURL(event.target.files[0]);
+    async function deleteInfo(id) {
+        await fetch(`http://localhost:8000/api/posts/${id}`, {
+            method: 'delete',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                if (res.ok) {
+                    window.location.reload();
+                }
+            })
+            .catch((err) => console.log(err));
     }
-    //
 
     return (
         <div>
             <form onSubmit={CreatePost}>
                 <StyledLabel>
-                    <input
+                    <DescriptionInput
                         type="text"
                         placeholder="Racontez votre histoire !"
                         id="description"
                         name="description"
-                    ></input>
-                    <StyledInput
-                        onChange={handleImage}
-                        type="file"
-                        id="image"
-                    ></StyledInput>
-                    <DisplayImage id="display_image"></DisplayImage>
+                    ></DescriptionInput>
+                    <FileInput type="file" id="image"></FileInput>
+                    <PostContentButton>Post Content</PostContentButton>
                 </StyledLabel>
-                <button>Post Content</button>
             </form>
-            <button onClick={getInfo}>Get</button>
-            {post && (
+            <div>
+                <ButtonPostUtils onClick={getInfo}>Get</ButtonPostUtils>
+            </div>
+            {posts && (
                 <div>
-                    <p>{post.description}</p>
-                    <StyledImg
-                        src={post.imageUrl}
-                        alt="image_post_user"
-                    ></StyledImg>
+                    {posts.map((post) => {
+                        return (
+                            <PostContainer key={post._id}>
+                                <p>{post.description}</p>
+                                <StyledImg
+                                    src={post.imageUrl}
+                                    alt="image_post_user"
+                                ></StyledImg>
+                                <br />
+                                <button
+                                    onClick={() => {
+                                        deleteInfo(`${post._id}`);
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </PostContainer>
+                        );
+                    })}
                 </div>
             )}
         </div>
