@@ -1,54 +1,12 @@
-import Profile from '../assets/profile.png';
-import styled from 'styled-components';
-import colors from '../utils/colors';
 import '../styles/reset.css';
-import CreatePost from '../components/Post';
-
-const Header = styled.div`
-    width: 66%;
-    border: solid 2px white;
-    background-color: ${colors.darkgrey};
-    color: white;
-`;
-
-const SizedImg = styled.img`
-    width: 75px;
-    height: 75px;
-`;
-
-const StyledButton = styled.button`
-    border: none;
-    background-color: transparent;
-    color: ${colors.white};
-    padding: 10px;
-    &:hover {
-        cursor: pointer;
-    }
-`;
-
-const StyledNav = styled.nav`
-    display: flex;
-    justify-content: center;
-`;
-function logout(e) {
-    e.preventDefault();
-    localStorage.clear('token');
-    window.location = '/';
-}
+import Posts from '../components/Home/Posts';
+import Header from '../components/Home/Header';
 
 function Home() {
     return (
         <>
-            <Header>
-                <StyledNav>
-                    <StyledButton>Accueil</StyledButton>
-                    <StyledButton>Settings</StyledButton>
-                    <StyledButton onClick={logout}>Logout</StyledButton>
-                </StyledNav>
-                <h1>Home</h1>
-                <SizedImg src={Profile} alt=""></SizedImg>
-            </Header>
-            <CreatePost />
+            <Header />
+            <Posts />
         </>
     );
 }

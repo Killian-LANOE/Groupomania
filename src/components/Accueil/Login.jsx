@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors from '../utils/colors';
+import colors from '../../utils/colors';
 
 const StyledLabel = styled.label`
     display: flex;
@@ -7,15 +7,14 @@ const StyledLabel = styled.label`
     margin-bottom: 10px;
     width: 100%;
 `;
-
-const FormContainerDiv = styled.div`
+const StyledForm = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 `;
 
-const SignupButton = styled.button`
+const LoginButton = styled.button`
     display: flex;
     justify-content: center;
     padding: 12px 20px;
@@ -26,52 +25,41 @@ const SignupButton = styled.button`
     cursor: pointer;
 `;
 
-const StyledForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-function HandleSignup(e) {
+function HandleLogin(e) {
     e.preventDefault();
-    fetch('http://localhost:8000/api/auth/signup', {
+    fetch('http://localhost:8000/api/auth/login', {
+        method: 'post',
         headers: {'Content-Type': 'application/json'},
-        method: 'POST',
         body: JSON.stringify({
-            name: e.target['name'].value,
-            firstName: e.target['firstName'].value,
             email: e.target['email'].value,
             password: e.target['password'].value,
         }),
-    }).then((res) => {
-        if (res.ok) {
-            alert('Utilisateur Crée');
-        }
-    });
+    })
+        .then(async (res) => {
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userId', data.userId);
+
+                window.location = '/home';
+            } else {
+                alert('Login/Password incorrect !');
+            }
+        })
+        .catch((err) => err.json());
 }
 
-function Signup() {
+function Login() {
     return (
-        <FormContainerDiv>
-            <StyledForm onSubmit={HandleSignup}>
-                <StyledLabel>
-                    Nom :
-                    <input type="text" name="name" placeholder="Nom"></input>
-                </StyledLabel>
-                <StyledLabel>
-                    Prénom :
-                    <input
-                        type="text"
-                        name="firstName"
-                        placeholder="Prénom"
-                    ></input>
-                </StyledLabel>
+        <div id="formContainer">
+            <StyledForm className="form" id="form" onSubmit={HandleLogin}>
                 <StyledLabel>
                     adresse mail :
                     <input
-                        type="mail"
                         name="email"
                         placeholder="exemple@mail.com"
+                        required
                     ></input>
                 </StyledLabel>
                 <StyledLabel>
@@ -80,12 +68,13 @@ function Signup() {
                         type="password"
                         name="password"
                         placeholder="password"
+                        required
                     ></input>
                 </StyledLabel>
-                <SignupButton>S'inscrire</SignupButton>
+                <LoginButton>Ce connecter</LoginButton>
             </StyledForm>
-        </FormContainerDiv>
+        </div>
     );
 }
 
-export default Signup;
+export default Login;

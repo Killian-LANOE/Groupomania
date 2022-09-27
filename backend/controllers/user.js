@@ -7,8 +7,6 @@ exports.signup = (req, res, next) => {
         .hash(req.body.password, 10)
         .then((hash) => {
             const user = new User({
-                name: req.body.name,
-                firstName: req.body.firstName,
                 email: req.body.email,
                 password: hash,
             });
@@ -47,6 +45,29 @@ exports.login = (req, res, next) => {
                     });
                 })
                 .catch((error) => res.status(500).json({error}));
+        })
+        .catch((error) => res.status(500).json({error}));
+};
+
+exports.getUser = (req, res, next) => {
+    console.log(`req.params.userId is: ${req.params.userId}`);
+    User.findOne({_id: req.params.userId})
+        .then((user) => {
+            console.log(user);
+            if (!user) {
+                return res
+                    .status(404)
+                    .json({message: 'Utilisateur non trouvé'});
+            }
+            return res.status(200).json({user});
+        })
+        .catch((error) => res.status(500).json({error}));
+};
+
+exports.getUsers = (req, res, next) => {
+    User.find()
+        .then((users) => {
+            return res.status(200).json({users});
         })
         .catch((error) => res.status(500).json({error}));
 };

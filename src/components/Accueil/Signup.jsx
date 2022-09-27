@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors from '../utils/colors';
+import colors from '../../utils/colors';
 
 const StyledLabel = styled.label`
     display: flex;
@@ -7,14 +7,15 @@ const StyledLabel = styled.label`
     margin-bottom: 10px;
     width: 100%;
 `;
-const StyledForm = styled.form`
+
+const FormContainerDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 `;
 
-const LoginButton = styled.button`
+const SignupButton = styled.button`
     display: flex;
     justify-content: center;
     padding: 12px 20px;
@@ -25,39 +26,39 @@ const LoginButton = styled.button`
     cursor: pointer;
 `;
 
-function HandleLogin(e) {
+const StyledForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+function HandleSignup(e) {
     e.preventDefault();
-    fetch('http://localhost:8000/api/auth/login', {
-        method: 'post',
+    fetch('http://localhost:8000/api/auth/signup', {
         headers: {'Content-Type': 'application/json'},
+        method: 'POST',
         body: JSON.stringify({
             email: e.target['email'].value,
             password: e.target['password'].value,
         }),
-    })
-        .then(async (res) => {
-            if (res.ok) {
-                const response = await res.json();
-                console.log(response.token);
-                localStorage.setItem('token', response.token);
-                window.location = '/home';
-            } else {
-                alert('Login/Password incorrect !');
-            }
-        })
-        .catch((err) => err.json());
+    }).then((res) => {
+        if (res.ok) {
+            alert('Utilisateur Crée');
+            window.location = '/';
+        }
+    });
 }
 
-function Login() {
+function Signup() {
     return (
-        <div id="formContainer">
-            <StyledForm className="form" id="form" onSubmit={HandleLogin}>
+        <FormContainerDiv>
+            <StyledForm onSubmit={HandleSignup}>
                 <StyledLabel>
                     adresse mail :
                     <input
+                        type="mail"
                         name="email"
                         placeholder="exemple@mail.com"
-                        required
                     ></input>
                 </StyledLabel>
                 <StyledLabel>
@@ -66,13 +67,12 @@ function Login() {
                         type="password"
                         name="password"
                         placeholder="password"
-                        required
                     ></input>
                 </StyledLabel>
-                <LoginButton>Ce connecter</LoginButton>
+                <SignupButton>S'inscrire</SignupButton>
             </StyledForm>
-        </div>
+        </FormContainerDiv>
     );
 }
 
-export default Login;
+export default Signup;

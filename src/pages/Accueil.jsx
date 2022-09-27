@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import logo from '../assets/logo_red-black.svg';
 import React, {useState} from 'react';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import Login from '../components/Accueil/Login';
+import Signup from '../components/Accueil/Signup';
 import '../styles/reset.css';
 
 const NavButton = styled.button`
