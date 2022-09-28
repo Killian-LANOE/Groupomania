@@ -52,7 +52,6 @@ exports.login = (req, res, next) => {
 exports.getUser = (req, res, next) => {
     User.findOne({_id: req.params.userId})
         .then((user) => {
-            console.log(user);
             if (!user) {
                 return res
                     .status(404)

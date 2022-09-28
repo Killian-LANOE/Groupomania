@@ -18,6 +18,8 @@ const LikeContainer = styled.div`
 
 const LikeNumber = styled.p`
     margin: 20px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const PostContainer = styled.div`
@@ -98,8 +100,12 @@ function Post() {
                         <NoteContainer>
                             <Avis />
                             <LikeContainer>
-                                <LikeNumber>{post.likes}</LikeNumber>
-                                <LikeNumber>{post.dislikes}</LikeNumber>
+                                <LikeNumber>
+                                    {post.likes} <span>J'aime</span>
+                                </LikeNumber>
+                                <LikeNumber>
+                                    {post.dislikes} <span>Je n'aime pas</span>
+                                </LikeNumber>
                             </LikeContainer>
                         </NoteContainer>
 
