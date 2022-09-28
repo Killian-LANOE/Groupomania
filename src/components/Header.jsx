@@ -1,17 +1,12 @@
-import Profile from '../../assets/profile.png';
 import styled from 'styled-components';
-import colors from '../../utils/colors';
+import colors from '../utils/colors';
 
 const HeaderDiv = styled.div`
-    width: 66%;
-    border: solid 2px white;
-    background-color: ${colors.darkgrey};
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
     color: white;
-`;
-
-const SizedImg = styled.img`
-    width: 75px;
-    height: 75px;
+    align-items: center;
 `;
 
 const StyledButton = styled.button`
@@ -47,8 +42,6 @@ function Header() {
                 <StyledButton onClick={homePage}>Accueil</StyledButton>
                 <StyledButton onClick={logout}>Logout</StyledButton>
             </StyledNav>
-            <h1>Home</h1>
-            <SizedImg src={Profile} alt=""></SizedImg>
         </HeaderDiv>
     );
 }

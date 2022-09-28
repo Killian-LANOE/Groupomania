@@ -50,7 +50,6 @@ exports.login = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-    console.log(`req.params.userId is: ${req.params.userId}`);
     User.findOne({_id: req.params.userId})
         .then((user) => {
             console.log(user);
@@ -60,14 +59,6 @@ exports.getUser = (req, res, next) => {
                     .json({message: 'Utilisateur non trouvé'});
             }
             return res.status(200).json({user});
-        })
-        .catch((error) => res.status(500).json({error}));
-};
-
-exports.getUsers = (req, res, next) => {
-    User.find()
-        .then((users) => {
-            return res.status(200).json({users});
         })
         .catch((error) => res.status(500).json({error}));
 };

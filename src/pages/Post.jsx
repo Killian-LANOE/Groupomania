@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header from '../components/Home/Header';
+import Header from '../components/Header';
 import DeletePost from '../components/Home/DeletePost';
 import ModifyPost from '../components/Home/ModifyPost';
 import Avis from '../components/Home/Avis';
@@ -7,16 +7,45 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 const ImgResize = styled.img`
-    width: 300px;
-    heigth: 300px;
+    width: 280px;
+    heigth: 280px;
 `;
 
 const LikeContainer = styled.div`
     display: flex;
+    flex-direction: row;
 `;
 
 const LikeNumber = styled.p`
-    margin-right: 15px;
+    margin: 20px;
+`;
+
+const PostContainer = styled.div`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const ModifyContainer = styled.div`
+    margin-top: 50px;
+    border: 2px solid white;
+    padding: 15px;
+`;
+
+const PostElement = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid white;
+    margin-bottom: 15px;
+`;
+
+const NoteContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const token = localStorage.getItem('token');
@@ -46,51 +75,46 @@ function Post() {
         );
         const data = await res.json();
         await setUser(data.user);
-        console.log(data);
     }
 
-    async function getUsers() {
-        const res = await fetch(`http://localhost:8000/api/auth/users/`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        const data = await res.json();
-        console.log(data);
-    }
     useEffect(() => {
         getPostInfo().then(() => {});
         getUserInfo().then(() => {});
-        getUsers().then(() => {});
     }, []);
 
     return (
         <>
             <Header />
-            <div>
+            <PostContainer>
                 {post && user && (
                     <>
-                        <ImgResize
-                            src={post.imageUrl}
-                            alt="post_image"
-                        ></ImgResize>
-                        <p>{post.description}</p>
-                        <Avis />
-                        <LikeContainer>
-                            <LikeNumber>{post.likes}</LikeNumber>
-                            <LikeNumber>{post.dislikes}</LikeNumber>
-                        </LikeContainer>
+                        <PostElement>
+                            <ImgResize
+                                src={post.imageUrl}
+                                alt="post_image"
+                            ></ImgResize>
+                            <p>{post.description}</p>
+                        </PostElement>
+                        <NoteContainer>
+                            <Avis />
+                            <LikeContainer>
+                                <LikeNumber>{post.likes}</LikeNumber>
+                                <LikeNumber>{post.dislikes}</LikeNumber>
+                            </LikeContainer>
+                        </NoteContainer>
 
                         {(user.isAdmin === true ||
                             user._id === post.userId) && (
                             <>
                                 <DeletePost />
-                                <ModifyPost />
+                                <ModifyContainer>
+                                    <ModifyPost />
+                                </ModifyContainer>
                             </>
                         )}
                     </>
                 )}
-            </div>
+            </PostContainer>
         </>
     );
 }

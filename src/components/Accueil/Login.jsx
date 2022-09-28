@@ -15,14 +15,25 @@ const StyledForm = styled.form`
 `;
 
 const LoginButton = styled.button`
-    display: flex;
-    justify-content: center;
     padding: 12px 20px;
-    background: ${colors.primary};
+    margin: 20px 0;
+    background: #fff;
     font-weight: bold;
-    color: white;
+    color: black;
     border: none;
-    cursor: pointer;
+    border-radius: 20px;
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
+const PopUp = styled.div`
+    background: black;
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: rgb(31 32 40) 0px 5px 30px -10px;
+    border: 2px solid ${colors.tertiary};
 `;
 
 function HandleLogin(e) {
@@ -52,11 +63,13 @@ function HandleLogin(e) {
 
 function Login() {
     return (
-        <div id="formContainer">
+        <PopUp>
+            <h1>Login</h1>
             <StyledForm className="form" id="form" onSubmit={HandleLogin}>
                 <StyledLabel>
                     adresse mail :
                     <input
+                        type="mail"
                         name="email"
                         placeholder="exemple@mail.com"
                         required
@@ -71,9 +84,9 @@ function Login() {
                         required
                     ></input>
                 </StyledLabel>
-                <LoginButton>Ce connecter</LoginButton>
+                <LoginButton>Se connecter</LoginButton>
             </StyledForm>
-        </div>
+        </PopUp>
     );
 }
 

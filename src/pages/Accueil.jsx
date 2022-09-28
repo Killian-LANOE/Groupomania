@@ -1,49 +1,64 @@
 import styled from 'styled-components';
-import logo from '../assets/logo_red-black.svg';
 import React, {useState} from 'react';
 import Login from '../components/Accueil/Login';
 import Signup from '../components/Accueil/Signup';
 import '../styles/reset.css';
+import colors from '../utils/colors.js';
+import logo from '../assets/logo_white.png';
 
-const NavButton = styled.button`
-    border: none;
-    background-color: transparent;
-    color: white;
+const ImgResize = styled.img`
+    position: absolute;
+    top: 0px;
+    width: 300px;
+    height: auto;
+`;
+
+const MenuButton = styled.button`
+    border: 2px solid white;
+    border-radius: 10px;
+    background: ${colors.tertiary}
+    color: black;
+    margin: 0 10px;
+    padding: 5px 15px ;
     &:hover {
         cursor: pointer;
-        color: blue;
+        font-weight: bold;
+        border: 2px solid ${colors.tertiary};
+        padding: 10px 20px;
     }
 `;
 
-const StyledNav = styled.nav`
+const FormContainer = styled.div`
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    height: 100vh;
+    padding: 15px;
+    background: linear-gradient(110deg, ${colors.primary}, ${colors.tertiary});
+    align-items: center;
+    justify-content: center;
 `;
 
 function Accueil() {
-    const [title, setTitle] = useState('Login');
-    const [form, setForm] = useState(<Login />);
+    const [form, setForm] = useState();
     const setSignup = (e) => {
         e.preventDefault();
-        setTitle('Signup');
         setForm(<Signup />);
     };
     const setLogin = (e) => {
         e.preventDefault();
-        setTitle('Login');
         setForm(<Login />);
     };
 
     return (
         <>
-            <StyledNav>
-                <NavButton onClick={setLogin}>Login</NavButton>
-                <NavButton onClick={setSignup}>Signup</NavButton>
-            </StyledNav>
-            <h1>{title}</h1>
-            {form}
-
-            <img src={logo} alt="logo Groupomania" />
+            <FormContainer>
+                <ImgResize src={logo} alt="logo groupomania"></ImgResize>
+                {form}
+                <div>
+                    <MenuButton onClick={setLogin}>Login</MenuButton>
+                    <MenuButton onClick={setSignup}>Signup</MenuButton>
+                </div>
+            </FormContainer>
         </>
     );
 }

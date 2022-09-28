@@ -1,7 +1,23 @@
 import {useParams} from 'react-router-dom';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import styled from 'styled-components';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faThumbsUp} from '@fortawesome/free-regular-svg-icons';
+import {faThumbsDown} from '@fortawesome/free-regular-svg-icons';
+
+const LikeButton = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+const AvisButton = styled.button`
+    margin: 10px 10px 0px 10px;
+`;
 
 const token = localStorage.getItem('token');
+
+const likeIcon = <FontAwesomeIcon icon={faThumbsUp} />;
+const dislikeIcon = <FontAwesomeIcon icon={faThumbsDown} />;
 
 function Avis() {
     const {postId} = useParams();
@@ -33,7 +49,7 @@ function Avis() {
         } else {
             console.log('like else, like +1');
             await setlikeactive(true);
-            await setlike(0);
+            await setlike(1);
 
             await fetch(`http://localhost:8000/api/posts/${postId}/like`, {
                 method: 'POST',
@@ -88,11 +104,40 @@ function Avis() {
         }
     }
 
+    useEffect(() => {
+        const isLikeActive = window.localStorage.getItem('likeActive');
+        console.log(isLikeActive);
+
+        if (isLikeActive !== null) {
+            setlikeactive(JSON.parse(isLikeActive));
+        }
+    }, []);
+
+    useEffect(() => {
+        const isDislikeActive = window.localStorage.getItem('dislikeActive');
+        console.log(isDislikeActive);
+
+        if (isDislikeActive !== null) {
+            setdislikeactive(JSON.parse(isDislikeActive));
+        }
+        return () => {
+            setdislikeactive();
+        };
+    }, []);
+
+    useEffect(() => {
+        window.localStorage.setItem('likeActive', JSON.stringify(likeactive));
+        window.localStorage.setItem(
+            'dislikeActive',
+            JSON.stringify(dislikeactive)
+        );
+    });
+
     return (
-        <>
-            <button onClick={handleLike}>Like {like}</button>
-            <button onClick={handleDislike}>Dislike {dislike}</button>
-        </>
+        <LikeButton>
+            <AvisButton onClick={handleLike}>{likeIcon}</AvisButton>
+            <AvisButton onClick={handleDislike}>{dislikeIcon}</AvisButton>
+        </LikeButton>
     );
 }
 

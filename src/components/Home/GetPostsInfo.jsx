@@ -11,17 +11,35 @@ const PostContainer = styled.div`
     text-align: center;
     border: solid 2px white;
     margin: 15px 0px;
+    width: 300px;
+    @media (min-width: 769px) {
+        width: 400px;
+        height: 300px;
+    }
 `;
 
 const StyledImg = styled.img`
-    width: 150px;
-    heigth: 150px;
+    width: 200px;
     margin-bottom: 10px;
 `;
 
 const PostsStyled = styled.div`
     display: flex;
     flex-direction: column-reverse;
+    align-items: center;
+`;
+
+const PostDescription = styled.p`
+    border: 2px solid white;
+    margin: 0;
+    padding: 15px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (min-width: 769px) {
+        height: 55px;
+    }
 `;
 
 //
@@ -33,18 +51,22 @@ const token = localStorage.getItem('token');
 function GetPostInfo() {
     const [posts, setPosts] = useState();
     async function getInfo() {
-        const res = await fetch('http://localhost:8000/api/posts', {
+        await fetch('http://localhost:8000/api/posts', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        });
-        const data = await res.json();
-        setPosts(data.posts);
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setPosts(data.posts);
+            })
+            .catch((err) => console.log(err));
     }
 
     useEffect(() => {
         getInfo();
     }, []);
+
     return (
         <>
             {posts && (
@@ -66,8 +88,9 @@ function GetPostInfo() {
                                         src={post.imageUrl}
                                         alt="image_post_user"
                                     ></StyledImg>
-                                    <p>{post.description}</p>
-                                    <br />
+                                    <PostDescription>
+                                        {post.description}
+                                    </PostDescription>
                                 </PostContainer>
                             </PostLink>
                         );

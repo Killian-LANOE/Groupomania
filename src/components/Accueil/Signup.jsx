@@ -8,7 +8,7 @@ const StyledLabel = styled.label`
     width: 100%;
 `;
 
-const FormContainerDiv = styled.div`
+const StyledForm = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,20 +16,25 @@ const FormContainerDiv = styled.div`
 `;
 
 const SignupButton = styled.button`
-    display: flex;
-    justify-content: center;
     padding: 12px 20px;
-    background: ${colors.primary};
+    margin: 20px 0;
+    background: #fff;
     font-weight: bold;
-    color: white;
+    color: black;
     border: none;
-    cursor: pointer;
+    border-radius: 20px;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
-const StyledForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const PopUp = styled.div`
+    background: black;
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: rgb(31 32 40) 0px 5px 30px -10px;
+    border: 2px solid ${colors.tertiary};
 `;
 
 function HandleSignup(e) {
@@ -51,14 +56,18 @@ function HandleSignup(e) {
 
 function Signup() {
     return (
-        <FormContainerDiv>
+        <PopUp>
+            <h1>Signup</h1>
             <StyledForm onSubmit={HandleSignup}>
                 <StyledLabel>
                     adresse mail :
                     <input
-                        type="mail"
+                        type="text"
+                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                        title="adresse email invalide"
                         name="email"
                         placeholder="exemple@mail.com"
+                        required
                     ></input>
                 </StyledLabel>
                 <StyledLabel>
@@ -67,11 +76,13 @@ function Signup() {
                         type="password"
                         name="password"
                         placeholder="password"
+                        minLength="6"
+                        required
                     ></input>
                 </StyledLabel>
                 <SignupButton>S'inscrire</SignupButton>
             </StyledForm>
-        </FormContainerDiv>
+        </PopUp>
     );
 }
 

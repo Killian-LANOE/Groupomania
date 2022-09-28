@@ -49,11 +49,9 @@ exports.modifyPost = async (req, res, next) => {
     } else {
         if (req.file !== undefined) {
             console.log(postObject.imageUrl);
-            const filename = postObject.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                post.imageUrl = postObject.imageUrl;
-            });
+            post.imageUrl = postObject.imageUrl;
         }
+        post.imageUrl = postObject.imageUrl;
         post.description = postObject.description;
         return post
             .save()
