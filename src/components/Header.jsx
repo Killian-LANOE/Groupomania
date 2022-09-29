@@ -22,6 +22,9 @@ const StyledButton = styled.button`
 const StyledNav = styled.nav`
     display: flex;
     justify-content: center;
+    border: 1px solid white;
+    width: 100%;
+    margin-bottom: 20px;
 `;
 
 function logout(e) {

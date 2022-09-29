@@ -72,6 +72,7 @@ function ModifyPost() {
         <>
             <form onSubmit={handleModify}>
                 <StyledLabel>
+                    <h3>Modify your post</h3>
                     <DescriptionInput
                         type="text"
                         placeholder="Entrez votre modification !"

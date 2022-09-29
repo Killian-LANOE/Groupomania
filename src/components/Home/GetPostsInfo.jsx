@@ -14,13 +14,14 @@ const PostContainer = styled.div`
     width: 300px;
     @media (min-width: 769px) {
         width: 400px;
-        height: 300px;
+        height: 270px;
     }
 `;
 
-const StyledImg = styled.img`
-    width: 200px;
-    margin-bottom: 10px;
+const StyledImg = styled.div`
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
 
 const PostsStyled = styled.div`
@@ -38,7 +39,7 @@ const PostDescription = styled.p`
     justify-content: center;
     align-items: center;
     @media (min-width: 769px) {
-        height: 55px;
+        height: 38px;
     }
 `;
 
@@ -85,8 +86,9 @@ function GetPostInfo() {
                             >
                                 <PostContainer>
                                     <StyledImg
-                                        src={post.imageUrl}
-                                        alt="image_post_user"
+                                        style={{
+                                            backgroundImage: `url(${post.imageUrl})`,
+                                        }}
                                     ></StyledImg>
                                     <PostDescription>
                                         {post.description}

@@ -5,10 +5,17 @@ import ModifyPost from '../components/Home/ModifyPost';
 import Avis from '../components/Home/Avis';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import colors from '../utils/colors';
 
-const ImgResize = styled.img`
-    width: 280px;
-    heigth: 280px;
+const StyledImg = styled.div`
+    height: 200px;
+    width: 300px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @media (min-width: 769px) {
+        width: 400px;
+        height: 300px;
+    } ;
 `;
 
 const LikeContainer = styled.div`
@@ -39,15 +46,43 @@ const PostElement = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
     border: 2px solid white;
     margin-bottom: 15px;
+    width: 300px;
+    @media (min-width: 769px) {
+        width: 400px;
+        height: 300px;
+    } ;
 `;
 
 const NoteContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+`;
+
+const PostDescription = styled.p`
+    border: 2px solid white;
+    padding: 15px;
+    width: 270px;
+    margin: 0;
+    text-align: center;
+    @media (min-width: 769px) {
+        width: 370px;
+    }
+`;
+
+const MainContainer = styled.div`
+    display: flex;
+    background: ${colors.secondary};
+    justify-content: center;
+`;
+
+const MidleContainer = styled.div`
+    width: 100%;
+    background: ${colors.tertiary};
+    @media (min-width: 426px) {
+        width: 70%;
+    }
 `;
 
 const token = localStorage.getItem('token');
@@ -85,43 +120,46 @@ function Post() {
     }, []);
 
     return (
-        <>
-            <Header />
-            <PostContainer>
-                {post && user && (
-                    <>
-                        <PostElement>
-                            <ImgResize
-                                src={post.imageUrl}
-                                alt="post_image"
-                            ></ImgResize>
-                            <p>{post.description}</p>
-                        </PostElement>
-                        <NoteContainer>
-                            <Avis />
-                            <LikeContainer>
-                                <LikeNumber>
-                                    {post.likes} <span>J'aime</span>
-                                </LikeNumber>
-                                <LikeNumber>
-                                    {post.dislikes} <span>Je n'aime pas</span>
-                                </LikeNumber>
-                            </LikeContainer>
-                        </NoteContainer>
+        <MainContainer>
+            <MidleContainer>
+                <Header />
+                <PostContainer>
+                    {post && user && (
+                        <>
+                            <PostElement>
+                                <StyledImg
+                                    style={{
+                                        backgroundImage: `url(${post.imageUrl})`,
+                                    }}
+                                ></StyledImg>
+                                <PostDescription>
+                                    {post.description}
+                                </PostDescription>
+                            </PostElement>
+                            <NoteContainer>
+                                <Avis />
+                                <LikeContainer>
+                                    <LikeNumber>{post.likes} J'aime</LikeNumber>
+                                    <LikeNumber>
+                                        {post.dislikes} Je n'aime pas
+                                    </LikeNumber>
+                                </LikeContainer>
+                            </NoteContainer>
 
-                        {(user.isAdmin === true ||
-                            user._id === post.userId) && (
-                            <>
-                                <DeletePost />
-                                <ModifyContainer>
-                                    <ModifyPost />
-                                </ModifyContainer>
-                            </>
-                        )}
-                    </>
-                )}
-            </PostContainer>
-        </>
+                            {(user.isAdmin === true ||
+                                user._id === post.userId) && (
+                                <>
+                                    <DeletePost />
+                                    <ModifyContainer>
+                                        <ModifyPost />
+                                    </ModifyContainer>
+                                </>
+                            )}
+                        </>
+                    )}
+                </PostContainer>
+            </MidleContainer>
+        </MainContainer>
     );
 }
 

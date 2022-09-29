@@ -8,6 +8,7 @@ import {faThumbsDown} from '@fortawesome/free-regular-svg-icons';
 const LikeButton = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
 `;
 
 const AvisButton = styled.button`
