@@ -12,6 +12,7 @@ const CenteringDiv = styled.div`
     flex-direction: column;
     align-items: center;
     background: ${colors.secondary};
+    height: 100vh;
 `;
 
 const StyledDiv = styled.div`
@@ -20,6 +21,7 @@ const StyledDiv = styled.div`
     }
     width: 70%;
     background: ${colors.tertiary};
+    height: 100vh;
 `;
 
 function Home() {
