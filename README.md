@@ -4,13 +4,13 @@
 
 ## Télécharger Node.js et lancer le
 
-1. Télécherger la version recommandé de Node.js ici : https://nodejs.org/en/
+1. Télécharger la version recommandé de Node.js ici : https://nodejs.org/en/
 
 2. lancer Node.js command prompt
 
 ## Rendez-vous dans le dossier groupomania
 
-1.  effectuez les commande suivante dans le Node.js command prompt :
+1.  effectuez les commandes suivantes dans le Node.js command prompt :
 
     cd desktop  
     cd groupomania
