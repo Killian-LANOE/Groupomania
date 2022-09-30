@@ -51,7 +51,7 @@ exports.modifyPost = async (req, res, next) => {
             console.log(postObject.imageUrl);
             post.imageUrl = postObject.imageUrl;
         }
-        post.imageUrl = postObject.imageUrl;
+
         post.description = postObject.description;
         return post
             .save()
