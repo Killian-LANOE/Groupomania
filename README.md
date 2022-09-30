@@ -33,7 +33,7 @@
     cd frontend  
     npm start
 
-## le site devrait ce lancer seul, si ce n'est pas le cas
+## Le site devrait ce lancer seul, si ce n'est pas le cas
 
 1. lancer votre navigateur internet
 2. dans la barre de recherche rentrer l'adresse suivante : http://localhost:3000
