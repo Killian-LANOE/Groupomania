@@ -1,4 +1,6 @@
-## Pour démarrer le site, dans cette exemple le dossier groupomania à été placé sur le bureau, le chemin peut donc varié selon l'endoit ou celui-ci à été enregistré
+## Pour démarrer le site
+
+## Dans cette exemple le dossier groupomania à été placé sur le bureau, le chemin peut donc varié selon l'endoit ou celui-ci à été enregistré
 
 ## Télécharger Node.js et lancer le
 
@@ -10,14 +12,14 @@
 
 1.  effectuez les commande suivante dans le Node.js command prompt :
 
-    cd desktop
+    cd desktop  
     cd groupomania
 
 ## Lancer le serveur node
 
 1. allez de le dossier backend en effectuant les commandes :
 
-    cd backend
+    cd backend  
     node server
 
 ## Lancer la page du site
@@ -26,9 +28,9 @@
 
 2. effectuer les commandes suivantes :
 
-    cd desktop
-    cd groupomania
-    cd frontend
+    cd desktop  
+    cd groupomania  
+    cd frontend  
     npm start
 
 ## le site devrait ce lancer seul, si ce n'est pas le cas
