@@ -1,4 +1,4 @@
-## Pour démarrer le site
+## Pour démarrer le site :
 
 ## Dans cette exemple le dossier groupomania à été placé sur le bureau, le chemin peut donc varié selon l'endoit ou celui-ci à été enregistré
 
