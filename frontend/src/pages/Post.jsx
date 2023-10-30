@@ -93,20 +93,26 @@ function Post() {
   const [user, setUser] = useState();
 
   async function getPostInfo() {
-    const res = await fetch(`http://localhost:8000/api/posts/${postId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://groupomania-db.onrender.com/api/posts/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     setPost(data);
   }
   async function getUserInfo() {
-    const res = await fetch(`http://localhost:8000/api/auth/user/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://groupomania-db.onrender.com/api/auth/user/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     await setUser(data.user);
   }
